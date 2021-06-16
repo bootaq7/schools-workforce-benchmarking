@@ -1,0 +1,63 @@
+---
+title: "Comparison of Workforce Measures to Similar Schools"
+output: 
+  word_document
+    # reference_docx: word-styles-reference-01.docx  
+params:
+  measures: NA
+  matched: NA
+  selected: NA
+  plot_type: NA
+  number_of_schools: NA
+  characteristics: NA
+---
+<br>
+<br>
+You have chosen to compare on the following characteristics:
+<br>
+```{r, results='asis',echo=FALSE, warning=FALSE, message=FALSE}
+#load package
+library(knitr)
+
+#put characteristics into a table
+data.frame(Characteristics = params$characteristics) %>%
+  kable()
+
+```
+
+<br>
+
+```{r, results='asis',echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=6.5}
+
+
+#loop through each workforce measure, chart and statements
+
+for (i in params$measures) {
+
+cat('\n') #start new line 
+cat("#",i, "\n")
+
+#if density selected print density plot, else print histogram
+print(fn_chart1(params$matched, params$selected, i, params$plot_type))
+
+cat('\n')
+cat('\n')
+cat('\n')
+cat(paste("Number of schools in comparison is", nrow(params$matched)),'\n')
+cat('\n')
+cat(paste("Your", i, "is", params$selected[i]),'\n')
+cat('\n')
+cat(paste("The range for the group you have selected is", 
+         min(params$matched[[i]], na.rm = TRUE), "to", 
+        max(params$matched[[i]], na.rm = TRUE)),'\n')
+cat('\n')
+cat(paste("The mean average for the group you have selected is",
+         round(mean(params$matched[[i]], na.rm = TRUE),1)),'\n')
+cat('\n')
+cat(paste("The median for the group you have selected is",
+         median(params$matched[[i]], na.rm = TRUE)),'\n')
+cat('\n')
+
+}
+```
+

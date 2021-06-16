@@ -1,0 +1,17 @@
+---
+title: "School to School Comparison of Workforce Measures"
+output: word_document
+params:
+  t2_measures: NA
+  t2_matched: NA
+  t2_selected: NA
+---
+```{r, results='asis', echo=FALSE, warning=FALSE, message=FALSE, fig.height=4, fig.width=6.5}
+
+#loop through each workforce measure
+for (i in params$t2_measures){
+cat('\n')  
+cat("#",i, "\n")
+print(fn_chart2(params$t2_matched, params$t2_selected, i))
+cat('\n') 
+}
